@@ -2,7 +2,7 @@ export const SITE = {
   website: "https://ademfurkan.com/",
   author: "Adem Furkan Özcan",
   profile: "https://ademfurkan.com/",
-  desc: "A digital journal where I share my writings",
+  desc: "Digital journal of my thoughts and experiences",
   title: "Adem Furkan Özcan",
   ogImage: "og-image.png",
   lightAndDarkMode: true,

@@ -4,7 +4,7 @@ export const SITE = {
   profile: "https://ademfurkan.com/",
   desc: "A digital journal where I share my writings",
   title: "Adem Furkan Özcan",
-  ogImage: "astropaper-og.jpg",
+  ogImage: "og-image.png",
   lightAndDarkMode: true,
   postPerIndex: 4,
   postPerPage: 4,

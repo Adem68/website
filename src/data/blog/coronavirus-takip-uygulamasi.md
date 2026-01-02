@@ -5,6 +5,7 @@ modDatetime:
 title: Coronavirus Takip Uygulaması
 featured: false
 draft: false
+language: tr
 tags:
   - coronavirus
   - virus

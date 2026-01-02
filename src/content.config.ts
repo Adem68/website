@@ -19,6 +19,7 @@ const blog = defineCollection({
       description: z.string(),
       canonicalURL: z.string().optional(),
       timezone: z.string().optional(),
+      language: z.string().optional(),
     }),
 });
 

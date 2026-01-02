@@ -5,11 +5,13 @@ modDatetime:
 title: STMCTF DontBotherMe
 featured: false
 draft: false
+language: tr
 tags:
   - STMCTF
   - Writeup
   - mobile
   - DontBotherMe
+  - turkish
 description: STMCTF DontBotherMe Sorusu Çözümü
 ---
 

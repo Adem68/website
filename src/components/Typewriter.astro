@@ -1,0 +1,226 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"span"> {
+  messages: string[];
+  writeSpeed?: number; // speed of typing in ms
+  deleteSpeed?: number; // backspace speed in ms
+  waitDeleted?: number; // time after delete before writing again in ms
+  startDelay?: number; // delay before starting animation in ms
+}
+
+const {
+  messages = [],
+  writeSpeed = 100,
+  deleteSpeed = 33,
+  waitDeleted = 500,
+  startDelay = 0,
+  ...rest
+}: Props = Astro.props;
+---
+
+<astro-typewriter
+  {...rest}
+  data-messages={JSON.stringify(messages)}
+  data-write-speed={writeSpeed}
+  data-delete-speed={deleteSpeed}
+  data-wait-deleted={waitDeleted}
+  data-start-delay={startDelay}
+>
+  <noscript>{messages.join(", ")}</noscript>
+</astro-typewriter>
+
+<script>
+  const styles = `
+    @keyframes blink {
+      to {
+        visibility: hidden;
+      }
+    }
+
+    span[part="typewriter"] {
+      @media print {
+        display: none;
+      }
+
+      &::after {
+        content: "";
+        display: inline-block;
+        width: 1px;
+        height: 1em;
+        background-color: currentColor;
+        transform: translateY(0.125em);
+        animation: blink 0.8s steps(2, start) infinite;
+
+        @media (prefers-reduced-motion: reduce) {
+          animation: none;
+          visibility: hidden;
+        }
+      }
+
+      &.paused::after {
+        animation: none;
+        display: none; /* Hide cursor when paused */
+      }
+    }
+
+    .screenreader-or-print {
+      @media not print {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+    }
+  `;
+
+  class AstroTypewriter extends HTMLElement {
+    #messages = [] as string[][];
+    #writeSpeed = 100;
+    #deleteSpeed = 33;
+    #waitDeleted = 500;
+    #startDelay = 0;
+
+    #timeoutId: ReturnType<typeof setTimeout> | null = null;
+    #container: HTMLSpanElement;
+
+    constructor() {
+      super();
+      /* eslint-disable @typescript-eslint/no-non-null-assertion */
+      this.#writeSpeed = parseInt(this.dataset.writeSpeed!);
+      this.#deleteSpeed = parseInt(this.dataset.deleteSpeed!);
+      this.#waitDeleted = parseInt(this.dataset.waitDeleted!);
+      this.#startDelay = parseInt(this.dataset.startDelay!);
+      const messages = JSON.parse(this.dataset.messages!);
+      /* eslint-enable @typescript-eslint/no-non-null-assertion */
+      this.#messages = messages.map(this.#localeSafeSplit);
+
+      const stylesheet = new CSSStyleSheet();
+      stylesheet.replaceSync(styles);
+
+      const screenreader = document.createElement("span");
+      screenreader.classList.add("screenreader-or-print");
+      screenreader.innerText = messages.join(", ");
+
+      const container = document.createElement("span");
+      container.setAttribute("part", "typewriter");
+      container.setAttribute("aria-hidden", "true");
+
+      const shadow = this.attachShadow({ mode: "open" });
+      shadow.adoptedStyleSheets = [stylesheet];
+      shadow.appendChild(screenreader);
+      shadow.appendChild(container);
+
+      this.#container = container;
+    }
+
+    #localeSafeSplit(str: string) {
+      if (!Intl.Segmenter) {
+        return Array.from(str);
+      }
+      return [...new Intl.Segmenter().segment(str)].map(x => x.segment);
+    }
+
+    #wait(millis: number) {
+      return new Promise(res => (this.#timeoutId = setTimeout(res, millis)));
+    }
+
+    #pauseCursor() {
+      this.#container.classList.add("paused");
+    }
+
+    #resumeCursor() {
+      this.#container.classList.remove("paused");
+    }
+
+    async #printAnimated({
+      chars,
+      charIdx,
+      direction = "write",
+    }: {
+      chars: string[];
+      charIdx: number;
+      direction?: "write" | "delete";
+    }): Promise<void> {
+      if (charIdx === chars.length) {
+        this.#pauseCursor();
+        // Stop here to prevent deleting and looping
+        return;
+
+        /* Original logic removed to stop loop:
+        this.#resumeCursor();
+        await this.#wait(this.#waitWritten);
+        this.#pauseCursor();
+        return this.#printAnimated({
+          chars: chars,
+          charIdx: charIdx - 1,
+          direction: "delete",
+        });
+        */
+      }
+
+      if (charIdx === -1) {
+        this.#resumeCursor();
+        await this.#wait(this.#waitDeleted);
+        this.#pauseCursor();
+        return;
+      }
+
+      const nextCharIdx = direction === "write" ? charIdx + 1 : charIdx - 1;
+      const newMessage =
+        nextCharIdx > 0 ? chars.slice(0, nextCharIdx).join("") : "";
+
+      this.#container.innerText = newMessage;
+
+      const delay =
+        direction === "write" ? this.#writeSpeed : this.#deleteSpeed;
+      await this.#wait(delay);
+
+      return this.#printAnimated({
+        chars: chars,
+        charIdx: nextCharIdx,
+        direction,
+      });
+    }
+
+    async #runAnimation() {
+      if (this.#startDelay > 0) {
+        this.#pauseCursor();
+        await this.#wait(this.#startDelay);
+        this.#resumeCursor();
+      }
+
+      while (this.isConnected) {
+        for (const message of this.#messages) {
+          await this.#printAnimated({
+            chars: message,
+            charIdx: 0,
+          });
+          // Break after first message since we don't want to loop or delete
+          // If multiple messages were provided, this logic would need adjustment to go to next message
+          // But user requested "yazdiktan sonra geri silmesin", implying single sequence or stop at end.
+          // Current implementation handles one message at a time in the loop.
+          // If we want it to stop completely after writing:
+          return;
+        }
+      }
+    }
+
+    connectedCallback() {
+      this.#runAnimation();
+    }
+
+    disconnectedCallback() {
+      if (this.#timeoutId) {
+        clearTimeout(this.#timeoutId);
+      }
+    }
+  }
+
+  customElements.define("astro-typewriter", AstroTypewriter);
+</script>

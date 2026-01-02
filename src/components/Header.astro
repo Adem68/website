@@ -2,11 +2,9 @@
 import Hr from "./Hr.astro";
 import IconX from "@/assets/icons/IconX.svg";
 import IconMoon from "@/assets/icons/IconMoon.svg";
-import IconSearch from "@/assets/icons/IconSearch.svg";
-import IconArchive from "@/assets/icons/IconArchive.svg";
+import Search from "@/components/Search.astro";
 import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
-import LinkButton from "./LinkButton.astro";
 import { SITE } from "@/config";
 
 const { pathname } = Astro.url;
@@ -23,22 +21,9 @@ const isActive = (path: string) => {
 };
 ---
 
-<header>
-  <a
-    id="skip-to-content"
-    href="#main-content"
-    class="absolute start-16 -top-full z-50 bg-background px-3 py-2 text-accent backdrop-blur-lg transition-all focus:top-4"
-  >
-    Skip to content
-  </a>
-  <div
-    id="nav-container"
-    class="mx-auto flex max-w-app flex-col items-center justify-between sm:flex-row"
-  >
-    <div
-      id="top-nav-wrap"
-      class="relative flex w-full items-baseline justify-between bg-background p-4 sm:items-center sm:py-6"
-    >
+<header class="fixed top-0 z-50 w-full bg-background/75 backdrop-blur-md">
+  <div id="nav-container" class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+    <div id="top-nav-wrap" class="flex h-16 items-center justify-between">
       <a
         href="/"
         class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
@@ -69,13 +54,11 @@ const isActive = (path: string) => {
           ]}
         >
           <li class="col-span-2">
-            <a href="/posts" class:list={{ "active-nav": isActive("/posts") }}>
-              Posts
-            </a>
+            <a href="/" class:list={{ "active-nav": isActive("/") }}> Home </a>
           </li>
           <li class="col-span-2">
-            <a href="/tags" class:list={{ "active-nav": isActive("/tags") }}>
-              Tags
+            <a href="/posts" class:list={{ "active-nav": isActive("/posts") }}>
+              Posts
             </a>
           </li>
           <li class="col-span-2">
@@ -83,39 +66,8 @@ const isActive = (path: string) => {
               About
             </a>
           </li>
-          {
-            SITE.showArchives && (
-              <li class="col-span-2">
-                <LinkButton
-                  href="/archives"
-                  class:list={[
-                    "focus-outline flex justify-center p-3 sm:p-1",
-                    {
-                      "active-nav [&>svg]:stroke-accent": isActive("/archives"),
-                    },
-                  ]}
-                  ariaLabel="archives"
-                  title="Archives"
-                >
-                  <IconArchive class="hidden sm:inline-block" />
-                  <span class="sm:sr-only">Archives</span>
-                </LinkButton>
-              </li>
-            )
-          }
           <li class="col-span-1 flex items-center justify-center">
-            <LinkButton
-              href="/search"
-              class:list={[
-                "focus-outline flex p-3 sm:p-1",
-                { "[&>svg]:stroke-accent": isActive("/search") },
-              ]}
-              ariaLabel="search"
-              title="Search"
-            >
-              <IconSearch />
-              <span class="sr-only">Search</span>
-            </LinkButton>
+            <Search />
           </li>
           {
             SITE.lightAndDarkMode && (
@@ -137,7 +89,7 @@ const isActive = (path: string) => {
       </nav>
     </div>
   </div>
-  <Hr />
+  <Hr noPadding />
 </header>
 
 <script>

@@ -1,0 +1,427 @@
+---
+import { Image } from "astro:assets";
+import Typewriter from "@/components/Typewriter.astro";
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE } from "@/config";
+import Socials from "@/components/Socials.astro";
+---
+
+<Layout title={`About | ${SITE.title}`}>
+  <Header />
+  <main id="main-content">
+    <section class="mx-auto max-w-5xl px-4 py-12">
+      {/* Hero / Intro Section */}
+      <div
+        class="mb-12 grid grid-cols-1 items-start gap-8 md:grid-cols-[2fr_1fr]"
+      >
+        <div class="order-2 space-y-6 md:order-1">
+          <div
+            class="min-h-[100px] font-serif font-bold tracking-tight text-accent"
+          >
+            <h1 class="mb-4 text-4xl" aria-label="Hi 👋, I'm Adem">
+              <Typewriter messages={["Hi 👋, I'm Adem"]} writeSpeed={100} />
+            </h1>
+            <div class="text-2xl opacity-90">
+              <Typewriter
+                messages={["iOS Engineer (24y) from Istanbul 🇹🇷"]}
+                writeSpeed={70}
+                startDelay={2500}
+              />
+            </div>
+          </div>
+          <div class="flex flex-col gap-4 text-lg leading-relaxed opacity-90">
+            <p>
+              I am proactive iOS Engineer with experience in Swift & SwiftUI.
+            </p>
+            <p>
+              I specialize in developing customer-centric mobile applications
+              with a focus on performance, scalability, and user experience.
+            </p>
+            <p>
+              With experience in large-scale e-commerce and B2B applications, I
+              am always eager to refine development workflows and enhance
+              application architecture.
+            </p>
+          </div>
+          <div class="flex flex-col gap-2 pt-4 sm:flex-row sm:items-center">
+            <span class="font-medium whitespace-nowrap opacity-80">Social:</span
+            >
+            <Socials exclude={["RSS"]} />
+          </div>
+        </div>
+
+        <div class="order-1 flex justify-center md:order-2 md:justify-start">
+          <div class="group relative">
+            <Image
+              src="https://avatars.githubusercontent.com/u/21019611?s=512"
+              alt="Adem Furkan Özcan"
+              class="relative h-64 w-64 rounded-[2rem] object-cover shadow-2xl md:h-80 md:w-80"
+              width={512}
+              height={512}
+              loading="eager"
+            />
+          </div>
+        </div>
+      </div>
+      {/* Tech Stack */}
+      <div>
+        <h2 class="mb-4 font-serif text-2xl font-bold text-accent">
+          Tech Stack
+        </h2>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <!-- Mobile Development -->
+          <div
+            class="flex flex-col gap-4 rounded-2xl border border-border/60 p-6"
+          >
+            <h3 class="text-lg font-semibold text-foreground">
+              Mobile Development
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/apple"
+                  class="dark-icon h-4 w-4"
+                  alt="iOS"
+                  width={16}
+                  height={16}
+                />
+                <span>iOS</span>
+              </div>
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/swift/F05138"
+                  class="h-4 w-4"
+                  alt="Swift"
+                  width={16}
+                  height={16}
+                />
+                <span>Swift</span>
+              </div>
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/android/3DDC84"
+                  class="h-4 w-4"
+                  alt="Android"
+                  width={16}
+                  height={16}
+                />
+                <span>Android</span>
+              </div>
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/kotlin/7F52FF"
+                  class="h-4 w-4"
+                  alt="Kotlin"
+                  width={16}
+                  height={16}
+                />
+                <span>Kotlin</span>
+              </div>
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/flutter/02569B"
+                  class="h-4 w-4"
+                  alt="Flutter"
+                  width={16}
+                  height={16}
+                />
+                <span>Flutter</span>
+              </div>
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/dart/0175C2"
+                  class="h-4 w-4"
+                  alt="Dart"
+                  width={16}
+                  height={16}
+                />
+                <span>Dart</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Web Development -->
+          <div
+            class="flex flex-col gap-4 rounded-2xl border border-border/60 p-6"
+          >
+            <h3 class="text-lg font-semibold text-foreground">
+              Web Development
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/javascript/F7DF1E"
+                  class="h-4 w-4"
+                  alt="JavaScript"
+                  width={16}
+                  height={16}
+                />
+                <span>JavaScript</span>
+              </div>
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/vuedotjs/4FC08D"
+                  class="h-4 w-4"
+                  alt="Vue.js"
+                  width={16}
+                  height={16}
+                />
+                <span>Vue.js</span>
+              </div>
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/nuxt/00DC82"
+                  class="h-4 w-4"
+                  alt="Nuxt"
+                  width={16}
+                  height={16}
+                />
+                <span>Nuxt</span>
+              </div>
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/nextdotjs"
+                  class="dark-icon h-4 w-4"
+                  alt="Next.js"
+                  width={16}
+                  height={16}
+                />
+                <span>Next.js</span>
+              </div>
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/astro/FF5D01"
+                  class="h-4 w-4"
+                  alt="Astro"
+                  width={16}
+                  height={16}
+                />
+                <span>Astro</span>
+              </div>
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/html5/E34F26"
+                  class="h-4 w-4"
+                  alt="HTML"
+                  width={16}
+                  height={16}
+                />
+                <span>HTML</span>
+              </div>
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/css/1572B6"
+                  class="h-4 w-4"
+                  alt="CSS"
+                  width={16}
+                  height={16}
+                />
+                <span>CSS</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Backend & Tools -->
+          <div
+            class="flex flex-col gap-4 rounded-2xl border border-border/60 p-6"
+          >
+            <h3 class="text-lg font-semibold text-foreground">
+              Backend & Tools
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/python/3776AB"
+                  class="h-4 w-4"
+                  alt="Python"
+                  width={16}
+                  height={16}
+                />
+                <span>Python</span>
+              </div>
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/go/00ADD8"
+                  class="h-4 w-4"
+                  alt="Go"
+                  width={16}
+                  height={16}
+                />
+                <span>Go</span>
+              </div>
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/flask"
+                  class="dark-icon h-4 w-4"
+                  alt="Flask"
+                  width={16}
+                  height={16}
+                />
+                <span>Flask</span>
+              </div>
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/graphql/E10098"
+                  class="h-4 w-4"
+                  alt="GraphQL"
+                  width={16}
+                  height={16}
+                />
+                <span>GraphQL</span>
+              </div>
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/git/F05032"
+                  class="h-4 w-4"
+                  alt="Git"
+                  width={16}
+                  height={16}
+                />
+                <span>Git</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Platform & Editors -->
+          <div
+            class="flex flex-col gap-4 rounded-2xl border border-border/60 p-6"
+          >
+            <h3 class="text-lg font-semibold text-foreground">
+              Platform & Editors
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/apple"
+                  class="dark-icon h-4 w-4"
+                  alt="macOS"
+                  width={16}
+                  height={16}
+                />
+                <span>macOS</span>
+              </div>
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/xcode/147EFB"
+                  class="h-4 w-4"
+                  alt="Xcode"
+                  width={16}
+                  height={16}
+                />
+                <span>Xcode</span>
+              </div>
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/androidstudio/3DDC84"
+                  class="h-4 w-4"
+                  alt="Android Studio"
+                  width={16}
+                  height={16}
+                />
+                <span>Android Studio</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Embedded & Hardware -->
+          <div
+            class="flex flex-col gap-4 rounded-2xl border border-border/60 p-6"
+          >
+            <h3 class="text-lg font-semibold text-foreground">
+              Embedded & Hardware
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/raspberrypi/C51A4A"
+                  class="h-4 w-4"
+                  alt="Raspberry Pi"
+                  width={16}
+                  height={16}
+                />
+                <span>Raspberry Pi</span>
+              </div>
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/arduino/00979D"
+                  class="h-4 w-4"
+                  alt="Arduino"
+                  width={16}
+                  height={16}
+                />
+                <span>Arduino</span>
+              </div>
+              <div
+                class="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5 text-xs transition-colors hover:border-accent/40 hover:bg-accent/5 sm:text-sm"
+              >
+                <Image
+                  src="https://cdn.simpleicons.org/bambulab/00AE42"
+                  class="h-4 w-4"
+                  alt="Bambu Lab"
+                  width={16}
+                  height={16}
+                />
+                <span>Bambu Lab</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <Footer />
+  </main>
+</Layout>
+
+<style>
+  html[data-theme="dark"] .dark-icon {
+    filter: invert(1);
+  }
+</style>

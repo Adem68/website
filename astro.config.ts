@@ -14,10 +14,9 @@ import { SITE } from "./src/config";
 // https://astro.build/config
 export default defineConfig({
   site: SITE.website,
+  base: "/website",
   integrations: [
-    sitemap({
-      filter: page => SITE.showArchives || !page.endsWith("/archives"),
-    }),
+    sitemap(),
   ],
   markdown: {
     remarkPlugins: [remarkToc, [remarkCollapse, { test: "Table of contents" }]],

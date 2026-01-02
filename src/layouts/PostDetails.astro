@@ -5,14 +5,13 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Tag from "@/components/Tag.astro";
 import Datetime from "@/components/Datetime.astro";
-import EditPost from "@/components/EditPost.astro";
-import ShareLinks from "@/components/ShareLinks.astro";
 import BackButton from "@/components/BackButton.astro";
 import BackToTopButton from "@/components/BackToTopButton.astro";
 import { getPath } from "@/utils/getPath";
 import { slugifyStr } from "@/utils/slugify";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
+import { Image } from "astro:assets";
 import { SITE } from "@/config";
 
 export interface Props {
@@ -32,7 +31,6 @@ const {
   modDatetime,
   timezone,
   tags,
-  hideEditPost,
 } = post.data;
 
 const { Content } = await render(post);
@@ -101,33 +99,22 @@ const nextPost =
     </h1>
     <div class="my-2 flex items-center gap-2">
       <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
-      <span
-        aria-hidden="true"
-        class:list={[
-          "max-sm:hidden",
-          { hidden: !SITE.editPost.enabled || hideEditPost },
-        ]}>|</span
-      >
-      <EditPost {hideEditPost} {post} class="max-sm:hidden" />
     </div>
     <article
       id="article"
       class="app-prose mx-auto mt-8 max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"
     >
-      <Content />
+      <Content components={{ img: Image }} />
     </article>
 
     <hr class="my-8 border-dashed" />
 
-    <EditPost class="sm:hidden" {hideEditPost} {post} />
-
-    <ul class="mt-4 mb-8 sm:my-8">
-      {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} />)}
-    </ul>
-
-    <BackToTopButton />
-
-    <ShareLinks />
+    <div class="flex items-center justify-between">
+      <ul class="mt-4 mb-8 sm:my-8">
+        {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} />)}
+      </ul>
+      <BackToTopButton />
+    </div>
 
     <hr class="my-6 border-dashed" />
 
@@ -173,7 +160,7 @@ const nextPost =
     // Create the main container div
     const progressContainer = document.createElement("div");
     progressContainer.className =
-      "progress-container fixed top-0 z-10 h-1 w-full bg-background";
+      "progress-container fixed top-16 z-50 h-1 w-full bg-transparent";
 
     // Create the progress bar div
     const progressBar = document.createElement("div");
@@ -183,8 +170,19 @@ const nextPost =
     // Append the progress bar to the progress container
     progressContainer.appendChild(progressBar);
 
-    // Append the progress container to the document body or any other desired parent element
-    document.body.appendChild(progressContainer);
+    // Select the header to attach the progress bar to
+    const header = document.querySelector("header");
+
+    if (header) {
+      progressContainer.className =
+        "progress-container absolute bottom-0 left-0 z-50 h-1 w-full bg-transparent";
+      header.appendChild(progressContainer);
+    } else {
+      // Fallback if header is missing (though it shouldn't be)
+      progressContainer.className =
+        "progress-container fixed top-0 z-50 h-1 w-full bg-transparent";
+      document.body.appendChild(progressContainer);
+    }
   }
   createProgressBar();
 

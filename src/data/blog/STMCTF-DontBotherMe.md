@@ -11,7 +11,7 @@ tags:
   - Writeup
   - mobile
   - DontBotherMe
-  - turkish
+  - android
 description: STMCTF DontBotherMe Sorusu Çözümü
 ---
 
